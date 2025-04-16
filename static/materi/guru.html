@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Halaman Guru</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: sans-serif; margin: 0; padding: 0; background: #f5f5f5; }
+    header { background: #2196F3; color: #fff; padding: 15px; text-align: center; position: relative; }
+    .menu { position: absolute; right: 20px; top: 15px; }
+    .menu a { color: white; margin-left: 10px; text-decoration: none; }
+
+    .container { padding: 20px; }
+    .form-box { background: #fff; padding: 15px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 20px; }
+    input, textarea { width: 100%; padding: 8px; margin: 8px 0; border: 1px solid #ccc; border-radius: 5px; }
+    button { padding: 10px 20px; background: #2196F3; color: white; border: none; border-radius: 5px; cursor: pointer; }
+
+    .card { background: #fff; padding: 15px; margin-bottom: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    .card img { max-width: 100%; height: auto; border-radius: 10px; margin-top: 10px; }
+    .judul { font-weight: bold; font-size: 18px; }
+    .tanggal { font-size: 12px; color: gray; }
+    .deskripsi { margin-top: 10px; }
+
+    .top-btns {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  Halaman Guru
+  <div class="menu">
+    <a href="/logout">Logout</a>
+  </div>
+</header>
+
+<div class="container">
+  <div class="top-btns">
+    <h2>Upload Materi</h2>
+    <a href="/lihat_tugas">
+      <button>Lihat Tugas Siswa</button>
+    </a>
+  </div>
+
+  <div class="form-box">
+    <form action="/upload" method="post" enctype="multipart/form-data">
+      <input type="text" name="judul" placeholder="Judul Materi" required>
+      <textarea name="deskripsi" placeholder="Deskripsi Materi" rows="3"></textarea>
+      <input type="file" name="file" accept="image/*,application/pdf" multiple>
+      <button type="submit">Upload</button>
+    </form>
+  </div>
+
+  <h3>Daftar Materi</h3>
+  {% for m in materi %}
+    <div class="card">
+      <div class="judul">{{ m[1] }}</div>
+      <div class="tanggal">{{ m[3] }}</div>
+      {% if m[2] %}
+        {% for f in m[2].split(',') %}
+          {% if f.endswith('.jpg') or f.endswith('.jpeg') or f.endswith('.png') or f.endswith('.gif') %}
+            <img src="/static/materi/{{ f }}">
+          {% endif %}
+          <p><a href="/static/materi/{{ f }}" target="_blank">Lihat File {{ f }}</a></p>
+        {% endfor %}
+      {% endif %}
+      <div class="deskripsi">{{ m[4] }}</div>
+      <p>
+        {% if m[2] %}
+          <a href="/hapus/{{ m[2] }}">Hapus</a>
+        {% else %}
+          <a href="/hapus/nofile_{{ m[0] }}">Hapus</a>
+        {% endif %}
+      </p>
+    </div>
+  {% endfor %}
+</div>
+
+</body>
+</html>

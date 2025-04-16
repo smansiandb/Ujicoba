@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Semua Gambar Tugas</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; background: #f0f0f0; }
+    h2 { margin-bottom: 20px; }
+    .gambar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    .gambar img {
+      width: 200px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    a { text-decoration: none; color: white; background: #2196F3; padding: 8px 12px; border-radius: 5px; display: inline-block; margin-top: 20px; }
+  </style>
+</head>
+<body>
+
+  <h2>Semua Gambar dari {{ tugas['nama'] }} ({{ tugas['kelas'] }})</h2>
+
+  <div class="gambar">
+    {% for img in tugas['gambar'] %}
+      <img src="/static/tugas/{{ img }}">
+    {% endfor %}
+  </div>
+
+  <a href="/lihat_tugas">Kembali</a>
+
+</body>
+</html>

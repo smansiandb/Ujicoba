@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Webset Materi</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f5f5f5;
+    }
+
+    header {
+      background: #2196F3;
+      color: #fff;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 999;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .hambergermnu {
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .hambergermnu div {
+      height: 4px;
+      width: 25px;
+      background-color: white;
+      margin: 4px 0;
+    }
+
+    .menu a {
+      color: white;
+      margin-left: 15px;
+      text-decoration: none;
+      font-weight: bold;
+      margin-right: 40px;
+    }
+
+    .container {
+      padding: 90px 20px 20px; /* top padding ditambah supaya konten tidak ketutup header */
+    }
+
+    .card {
+      background: #fff;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .judul {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .tanggal {
+      font-size: 13px;
+      color: gray;
+    }
+
+    .deskripsi {
+      margin-top: 10px;
+      font-size: 15px;
+    }
+
+.gambar-wrapper {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.gambar-wrapper img {
+  max-width: 100%; height: auto; border-radius: 10px; margin-top: 10px; }
+}
+    footer {
+      background: #eee;
+      padding: 15px 10px;
+      text-align: center;
+      font-size: 14px;
+      margin-top: 30px;
+    }
+
+    footer a {
+      margin: 0 8px;
+      color: #2196F3;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    @media screen and (max-width: 600px) {
+      .gambar-wrapper img {
+        width: 80px;
+      }
+      .judul {
+        font-size: 18px;
+      }
+      .deskripsi {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="hambergermnu">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+  <div class="menu">
+    <a href="/kumpul">Upload</a>
+    <a href="/login">Login</a>
+  </div>
+</header>
+
+<div class="container">
+  {% for m in materi %}
+    <div class="card">
+      <div class="judul">{{ m[1] }}</div>
+      <div class="tanggal">{{ m[3] }}</div>
+
+      {% if m[2] %}
+        <div class="gambar-wrapper">
+          {% for file in m[2].split(',') %}
+            {% if file.endswith('.jpg') or file.endswith('.jpeg') or file.endswith('.png') %}
+              <img src="/static/materi/{{ file.strip() }}">
+            {% endif %}
+          {% endfor %}
+        </div>
+        <p>
+          {% for file in m[2].split(',') %}
+            <a href="/download/{{ file.strip() }}">Download {{ file.strip() }}</a><br>
+          {% endfor %}
+        </p>
+      {% endif %}
+
+      <div class="deskripsi">{{ m[4] }}</div>
+    </div>
+  {% endfor %}
+</div>
+
+<footer>
+  Kontak Guru:
+  <a href="https://www.facebook.com/profile.php?id=100078082917488">FB</a> |
+  <a href="https://www.tiktok.com/@hamzmzmzmzmz?_t=ZS-8vZSi8QS0wx&_r=1">TikTok</a> |
+  <a href="https://instagram.com">Instagram</a>
+</footer>
+
+</body>
+</html>
