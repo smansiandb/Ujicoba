@@ -98,3 +98,5 @@ def get_tugas_by_id(tugas_id):
             'gambar': json.loads(t[4])
         }
     return None
+
+print("wellll")
